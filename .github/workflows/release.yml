@@ -3,7 +3,7 @@ name: 'C++ CI'
 on:
   push:
     branches:
-      - main
+      - master
       - feature/github_actions
 
 jobs:
@@ -14,12 +14,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+          
       - run: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       - run: brew install cmake
       # - run: brew install boost
       - run: cmake . -DPATCH_VERSION=${{ github.run_number }}
       - run: cmake --build .
-      - run: cmake --build . --target unit_tests
       - run: cmake --build . --target package
       - name: Create Release
         id: create_release
@@ -38,6 +38,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./02.cpp14--Darwin.7z
-          asset_name: 02.cpp14--Darwin.7z
+          asset_path: ./sr_9--Darwin.7z
+          asset_name: sr_9--Darwin.7z
           asset_content_type: application/x-7z-compressed
